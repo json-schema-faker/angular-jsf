@@ -6,10 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "Tomasz Ducin <tomasz@ducin.it>",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/json-schema-faker/angular-jsf.git"
   },
+  "bugs": {
+    "url": "https://github.com/json-schema-faker/angular-jsf/issues"
+  },
+  "homepage": "https://github.com/json-schema-faker/angular-jsf#readme",
   "keywords": [
     "angular",
     "mock",
@@ -18,11 +24,5 @@
     "json",
     "schema",
     "faker"
-  ],
-  "author": "Tomasz Ducin",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/json-schema-faker/angular-jsf/issues"
-  },
-  "homepage": "https://github.com/json-schema-faker/angular-jsf#readme"
+  ]
 }
