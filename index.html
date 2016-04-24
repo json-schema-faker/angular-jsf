@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="Tomasz Ducin">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>angular-jsf demo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.angularjs.org/1.4.0/angular.js"></script>
+    <script type="text/javascript" src="https://code.angularjs.org/1.4.0/angular-mocks.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/json-schema-faker/0.3.1/json-schema-faker.min.js"></script>
+    <script type="text/javascript" src="angular-jsf.js"></script>
+    <script type="text/javascript" src="schema.js"></script>
+    <script type="text/javascript" src="ui.js"></script>
+    <script type="text/javascript" src="mock.js"></script>
+</head>
+<body ng-app="demoApp">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">angular-jsf</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="https://github.com/json-schema-faker/json-schema-faker">JSON-Schema-faker</a></li>
+                <li><a href="https://github.com/json-schema-faker/angular-jsf">Github</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="starter-template heading">
+        <h1>AngularJS mock factory!</h1>
+        <p class="lead">
+            Generate random mocks on the fly and bind them to your REST resources
+            <br /> &#10003 user-friendly API
+            <br /> &#10003 fast to use
+            <br /> &#10003 flexible
+        </p>
+    </div>
+
+    <div class="row" ng-controller="demoCtrl">
+        <div class="heading">
+            <h1>Live demo</h1>
+            <p class="lead">
+                click (multiple times) on any of the buttons on the left to fire <code>$http</code> service calls
+                <br /> which will get handled by <code>$httpBackend</code> service.
+            </p>
+            <button class="btn btn-default" type="submit" ng-click="getUsersCollectionClick()">GET /users</button>
+            <button class="btn btn-default" type="submit" ng-click="getUserItemClick()">GET /users/123</button>
+            <button class="btn btn-default" type="submit" ng-click="postUserItemClick()">POST /users/71</button>
+            <button class="btn btn-default" type="submit" ng-click="putUserItemClick()">PUT /users</button>
+            <button class="btn btn-default" type="submit" ng-click="deleteUserItemClick()">DELETE /users/617</button>
+        </div>
+        <div class="col-md-6">
+            <h4>$http promise response</h4>
+            <textarea class="form-control monospaced" rows="18" readonly>{{result}}</textarea>
+        </div>
+        <div class="col-md-6">
+            <h4>source JSON Schema</h4>
+            <textarea class="form-control monospaced" rows="18" readonly>{{schema}}</textarea>
+        </div>
+    </div>
+
+    <div class="starter-template heading">
+        <h3>Why?</h3>
+        <p class="lead">
+            Because you want to concentrate on writing angular apps and not on generating mock data or even writing them by hand... and then configuring angular details to make them work.
+            <br /> This is an out-of-the-box solution that works immediately!
+            <br /> It enables you to do Backend-less development
+        </p>
+        <h3>How?</h3>
+        <p class="lead">
+            <a href="https://github.com/json-schema-faker/angular-jsf"><code>angular-jsf</code></a>
+            combines built-in angular
+            <a href="https://docs.angularjs.org/api/ngMock/service/$httpBackend"><code>$httpBackend</code></a>
+            service with <a href="https://github.com/json-schema-faker/json-schema-faker"><code>JSON-Schema-faker</code></a> library.
+            <br> Check out JSON-Schema-faker <a href="http://json-schema-faker.js.org">demo page</a> to see schema examples!
+        </p>
+    </div>
+
+    <div class="row" ng-controller="demoCtrl">
+        <div class="heading">
+            <h1>Guide</h1>
+        </div>
+        <p class="lead">
+            1. Make sure you include required JS files:
+        </p>
+        <code>angular-mocks</code> built-in module:
+        <pre>&lt;script type="text/javascript" src="https://code.angularjs.org/1.4.0/angular-mocks.js">&lt;/script></pre>
+        <code>json-schema-faker</code> library:
+        <pre>&lt;type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/json-schema-faker/0.3.1/json-schema-faker.min.js">&lt;/script></pre>
+        and <code>angular-jsf</code>:
+        <pre>&lt;script type="text/javascript" src="angular-jsf.js">&lt;/script></pre>
+
+        <p class="lead">
+            2. Use <code>jsf</code> as dependency:
+            <pre>var demoApp = angular.module('demoApp', ['jsf']);</pre>
+        </p>
+
+        <p class="lead">
+            3. define mocks in module <code>run</code> phase:
+<pre>demoApp.run(function (jsfRegisterMock) {
+
+// GET /users/
+
+jsfRegisterMock({
+    name: 'User Collection',
+    url: '/users',
+    method: 'GET',
+    responseSchema: {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "faker": "name.findName"
+            },
+            "email": {
+                "type": "string",
+                "faker": "internet.email"
+            },
+            "age": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+            }
+        },
+        "required": [
+            "name",
+            "email",
+            "age"
+        ]
+    }
+});
+</pre>
+            and be happy!
+        </p>
+    </div>
+
+    <div class="row" ng-controller="demoCtrl">
+        <div class="heading">
+            <h1>Early development version</h1>
+            <p class="lead">
+                Keep in mind angular-jsf is in early development stage and the API might change in future versions.
+            </p>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
