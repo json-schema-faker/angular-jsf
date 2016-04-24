@@ -1,0 +1,28 @@
+{
+  "name": "angular-jsf",
+  "version": "0.1.0",
+  "description": "AngularJS mock factory based on JSON-Schema-faker",
+  "main": "angular-jsf.js",
+  "authors": [
+    "Tomasz Ducin <tomasz.ducin@gmail.com>"
+  ],
+  "homepage": "https://github.com/json-schema-faker/angular-jsf",
+  "keywords": [
+    "angular",
+    "mock",
+    "mocks",
+    "backend-less",
+    "json",
+    "schema",
+    "faker"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "ui.js", "styles.css", "schema.js", "mock.js", "index.html", ".gitignore"
+  ]
+}
