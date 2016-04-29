@@ -1,6 +1,6 @@
 {
   "name": "angular-jsf",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "AngularJS mock factory based on JSON-Schema-faker",
   "main": "angular-jsf.js",
   "authors": [
