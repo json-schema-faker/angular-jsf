@@ -1,3 +1,5 @@
+![angular-jsf logo](logo/angular-jsf.png)
+
 # angular-jsf
 
 [![NPM version](https://badge.fury.io/js/angular-jsf.svg)](http://badge.fury.io/js/angular-jsf)
